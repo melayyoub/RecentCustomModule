@@ -24,13 +24,13 @@ function SemanticBits_block_info()
  */
 function SemanticBits_block_view($delta = '')
 {
+  global $user;
     // This example is adapted from node.module.
     $block = array();
 
     switch ($delta) {
         case 'test-custom-block':
             $block['subject'] = t('Current Pages');
-            if (user_access('access content')) {
                 $result = renderRecentModifiedPages();
                 // Array to contain items for the block to render.
                 $items = array();
@@ -47,8 +47,7 @@ function SemanticBits_block_view($delta = '')
                         );
                     }
                 }
-
-                // No content in the last week.
+                // No Pages modified today.
                 if (empty($items)) {
                     $block['content'] = t('No pages available.');
                 } else {
@@ -56,7 +55,6 @@ function SemanticBits_block_view($delta = '')
                     $block['content'] = theme('item_list', array(
                         'items' => $items, ));
                 }
-            }
             break;
     }
 
