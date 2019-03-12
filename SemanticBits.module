@@ -12,9 +12,10 @@ function SemanticBits_block_info()
         // DRUPAL_CACHE_PER_ROLE is the default.
         'cache' => DRUPAL_CACHE_PER_ROLE,
         // extra configurations
-        // "status" => true,
-        // "region" => "content",
+        'status' => true,
+        'region' => 'content',
         // "pages" => "node/*",
+        'title' => 'Current Semantic Pages',
     );
 
     return $blocks;
@@ -24,37 +25,37 @@ function SemanticBits_block_info()
  */
 function SemanticBits_block_view($delta = '')
 {
-  global $user;
+    global $user;
     // This example is adapted from node.module.
     $block = array();
 
     switch ($delta) {
         case 'test-custom-block':
-            $block['subject'] = t('Current Pages');
-                $result = renderRecentModifiedPages();
-                // Array to contain items for the block to render.
-                $items = array();
-                if (count($result) > 0) {
-                    // if the count is more than 1 then loop within the content
-                    // and show the titles with links
-                    foreach ($result as $node) {
-                        $items[] = array(
-                            'data' => l($node->title, 'node/'.$node->nid).'
+            $block['subject'] = t('Current Semantic Pages');
+            $result = renderRecentModifiedPages();
+            // Array to contain items for the block to render.
+            $items = array();
+            if (count($result) > 0) {
+                // if the count is more than 1 then loop within the content
+                // and show the titles with links
+                foreach ($result as $node) {
+                    $items[] = array(
+                        'data' => l($node->title, 'node/'.$node->nid).'
                          Changed Date:'
-                            .date('h:i - m/d/Y', $node->changed).
-                            ' Created Date:'
-                            .date('h:i - m/d/Y', $node->created),
-                        );
-                    }
+                        .date('h:i - m/d/Y', $node->changed).
+                        ' Created Date:'
+                        .date('h:i - m/d/Y', $node->created),
+                    );
                 }
-                // No Pages modified today.
-                if (empty($items)) {
-                    $block['content'] = t('No pages available.');
-                } else {
-                    // Pass data through theme function.
-                    $block['content'] = theme('item_list', array(
-                        'items' => $items, ));
-                }
+            }
+            // No Pages modified today.
+            if (empty($items)) {
+                $block['content'] = t('No pages available.');
+            } else {
+                // Pass data through theme function.
+                $block['content'] = theme('item_list', array(
+                    'items' => $items, ));
+            }
             break;
     }
 

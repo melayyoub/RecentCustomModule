@@ -1,0 +1,54 @@
+<?php
+/**
+ * @file
+ * Simple Test for SemanticBits Block module.
+ */
+class SemanticBitsTests extends DrupalWebTestCase
+{
+    /**
+     * Semantic Test Meta.
+     */
+    public static function getInfo()
+    {
+        return array(
+            'name' => 'Semantic Bits',
+            'description' => 'Check if the Block works fine.',
+            'group' => 'Semantic Bits',
+        );
+    }
+
+    public function setUp(array $modules = array())
+    {
+        // Enable SemanticBits custom module.
+        $modules[] = 'SemanticBits';
+        parent::setUp($modules);
+    }
+
+    /**
+     * Check the Front Page and See if the module is there.
+     */
+    public function testIsSemanticBits()
+    {
+        // Load the front page as the block expected to be within the homepage,
+        // as the module designed.
+        $this->drupalGet('<front>');
+
+        // Confirm No errors.
+        $this->assertResponse(200);
+
+        // extra check if we want to check some text within the homepage and
+        // contains what i'm looking for
+        // $this->assertText(t('Current Semantic Pages'), 'Module Works Fine.');
+    }
+
+    public function testSemanticBitsBlockView()
+    {
+        // Using Module Invoke function and check the module Block View with the name case we
+        // used in our block
+        $data = module_invoke('SemanticBits', 'block_view', 'test-custom-block');
+        // Check if the block subject exactly the subject we expected
+        $this->assertEqual(t('Current Semantic Pages'), $data['subject'], t('Subject is as expected.'));
+        // Check if the content got contents with no errors
+        $this->assertNotNull($data['content'], t('Block contains data.'));
+    }
+}

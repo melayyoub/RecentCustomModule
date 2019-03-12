@@ -3,3 +3,6 @@ description = Custom Drupal module that will render a list of pages that were mo
 core = 7.x
 package = SemanticBits
 version = 7.x-1.0
+
+; Tests
+files[] = tests/semantic.test
