@@ -9,3 +9,10 @@ Use Drupal 7 or 8
 We do understand your time is valuable and therefore tried to keep the scope of
 this challenge to 1-2 hours. The goal is to see your approach to the problem and
 your coding style rather than delivering a specific set of features.
+
+
+; Adding new Test file
+
+1- Test Drupal function
+2- Generate New dummy contents
+3- Check the Site after Enabling the module

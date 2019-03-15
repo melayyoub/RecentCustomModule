@@ -41,6 +41,44 @@ class SemanticBitsTests extends DrupalWebTestCase
         // $this->assertText(t('Current Semantic Pages'), 'Module Works Fine.');
     }
 
+    /**
+     * Testing generate new content.
+     */
+    public function testCreateTest()
+    {
+        $startDate = time();
+        // this today
+        $title = $this->randomName();
+        $settings = array(
+            'type' => 'page',
+            'promote' => 1,
+            'title' => $title,
+            'body' => array(LANGUAGE_NONE => array(
+                array(
+                    'value' => 'test',
+                    'format' => filter_default_format(),
+                ),
+            )),
+        );
+        $node = $this->drupalCreateNode($settings);
+        // this yesterday
+        $title = $this->randomName();
+        $settings = array(
+            'type' => 'page',
+            'promote' => 1,
+            'created' => strtotime(date('Y-m-d H:i:s', strtotime('-1 day', $startDate))),
+            'changed' => strtotime(date('Y-m-d H:i:s', strtotime('-1 day', $startDate))),
+            'title' => $title,
+            'body' => array(LANGUAGE_NONE => array(
+                array(
+                    'value' => 'test',
+                    'format' => filter_default_format(),
+                ),
+            )),
+        );
+        $node = $this->drupalCreateNode($settings);
+    }
+
     public function testSemanticBitsBlockView()
     {
         // Using Module Invoke function and check the module Block View with the name case we
